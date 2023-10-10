@@ -10,13 +10,13 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-//step1
+//step 1
 const button = document.createElement("button");
 button.textContent = "🎁";
 
 app.append(button);
 
-//step2
+//step 2
 let count: number = 0;
 const countText = document.createElement("presentCount");
 countText.innerHTML = `${count} present`;
@@ -31,3 +31,18 @@ function calculateCount() {
 }
 
 button.addEventListener("click", calculateCount, false);
+
+//step 3
+function countUp() {
+  count++;
+  if (count <= 1) {
+    countText.innerHTML = `${count} present`;
+  } else {
+    countText.innerHTML = `${count} presents`;
+  }
+}
+
+let intervalID;
+if (!intervalID) {
+  intervalID = setInterval(countUp, 1000);
+}
