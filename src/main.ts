@@ -50,17 +50,18 @@ if (!intervalID) {
 //step 4
 clearTimeout(intervalID);
 let previousTimeStamp: number;
+let growthRate: number = 0;
 function step(timestamp: number) {
   if (previousTimeStamp === undefined) {
     previousTimeStamp = timestamp;
   }
 
   const frameUpdate = (timestamp - previousTimeStamp) / 1000;
-  count += frameUpdate;
+  count += growthRate * frameUpdate;
   if (count <= 1) {
-    countText.innerHTML = `${count} present`;
+    countText.innerHTML = `${count.toFixed(1)} present`;
   } else {
-    countText.innerHTML = `${count} presents`;
+    countText.innerHTML = `${count.toFixed(1)} presents`;
   }
   previousTimeStamp = timestamp;
   requestAnimationFrame(step);
@@ -68,3 +69,27 @@ function step(timestamp: number) {
 requestAnimationFrame(step);
 
 //step5
+const lineBreak = document.createElement("br");
+app.append(lineBreak);
+const purchaseButton = document.createElement("button");
+purchaseButton.disabled = true;
+purchaseButton.innerHTML = `Purchase Growth Rate <br> Current Rate: ${growthRate}`;
+
+setInterval(() => {
+  if (count >= 10) {
+    purchaseButton.disabled = false;
+  } else {
+    purchaseButton.disabled = true;
+  }
+}, 100);
+
+function updatepurchaseButton() {
+  if (count >= 10) {
+    growthRate++;
+    count -= 10;
+    purchaseButton.innerHTML = `Purchase Growth Rate <br> Current Rate: ${growthRate}`;
+  }
+}
+app.append(purchaseButton);
+purchaseButton.addEventListener("click", updatepurchaseButton, false);
+purchaseButton.addEventListener("click", updatepurchaseButton, false);
