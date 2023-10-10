@@ -46,3 +46,25 @@ let intervalID;
 if (!intervalID) {
   intervalID = setInterval(countUp, 1000);
 }
+
+//step 4
+clearTimeout(intervalID);
+let previousTimeStamp: number;
+function step(timestamp: number) {
+  if (previousTimeStamp === undefined) {
+    previousTimeStamp = timestamp;
+  }
+
+  const frameUpdate = (timestamp - previousTimeStamp) / 1000;
+  count += frameUpdate;
+  if (count <= 1) {
+    countText.innerHTML = `${count} present`;
+  } else {
+    countText.innerHTML = `${count} presents`;
+  }
+  previousTimeStamp = timestamp;
+  requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+
+//step5
