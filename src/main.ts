@@ -99,40 +99,113 @@ requestAnimationFrame(step);
 // purchaseButton.addEventListener("click", updatepurchaseButton, false);
 
 //step 6
+// const lineBreak = document.createElement("br");
+// app.append(lineBreak);
+
+// const purchaseButton1 = document.createElement("button");
+// purchaseButton1.innerHTML = `cost 10 unity, get 0.1 units/sec`;
+// function updatepurchaseButton1() {
+//   if (count >= 10) {
+//     growthRate += 0.1;
+//     count -= 10;
+//     growthRateText.innerHTML = `Current Growth Rate: ${growthRate}`;
+//   }
+// }
+// app.append(purchaseButton1);
+// purchaseButton1.addEventListener("click", updatepurchaseButton1, false);
+
+// const purchaseButton2 = document.createElement("button");
+// purchaseButton2.innerHTML = `cost 100 unity, get 2 units/sec`;
+// function updatepurchaseButton2() {
+//   if (count >= 100) {
+//     growthRate += 2;
+//     count -= 100;
+//     growthRateText.innerHTML = `Current Growth Rate: ${growthRate}`;
+//   }
+// }
+// app.append(purchaseButton2);
+// purchaseButton2.addEventListener("click", updatepurchaseButton2, false);
+
+// const purchaseButton3 = document.createElement("button");
+// purchaseButton3.innerHTML = `cost 1000 unity, get 50 units/sec`;
+// function updatepurchaseButton3() {
+//   if (count >= 1000) {
+//     growthRate += 50;
+//     count -= 1000;
+//     growthRateText.innerHTML = `Current Growth Rate: ${growthRate}`;
+//   }
+// }
+// app.append(purchaseButton3);
+// purchaseButton3.addEventListener("click", updatepurchaseButton3, false);
+
+// setInterval(() => {
+//   if (count >= 10) {
+//     purchaseButton1.disabled = false;
+//   } else {
+//     purchaseButton1.disabled = true;
+//   }
+//   if (count >= 100) {
+//     purchaseButton2.disabled = false;
+//   } else {
+//     purchaseButton2.disabled = true;
+//   }
+//   if (count >= 1000) {
+//     purchaseButton3.disabled = false;
+//   } else {
+//     purchaseButton3.disabled = true;
+//   }
+// }, 100);
+
+//step 7
 const lineBreak = document.createElement("br");
 app.append(lineBreak);
 
 const purchaseButton1 = document.createElement("button");
-purchaseButton1.innerHTML = `cost 10 unity, get 0.1 units/sec`;
+let purchaseButton1Cost: number = 10;
+purchaseButton1.innerHTML = `cost ${purchaseButton1Cost} unity, get 0.1 units/sec`;
 function updatepurchaseButton1() {
-  if (count >= 10) {
+  if (count >= purchaseButton1Cost) {
     growthRate += 0.1;
     count -= 10;
-    growthRateText.innerHTML = `Current Growth Rate: ${growthRate}`;
+    purchaseButton1Cost *= 1.15;
+    growthRateText.innerHTML = `Current Growth Rate: ${growthRate.toFixed(1)}`;
+    purchaseButton1.innerHTML = `cost ${purchaseButton1Cost.toFixed(
+      3,
+    )} unity, get 0.1 units/sec`;
   }
 }
 app.append(purchaseButton1);
 purchaseButton1.addEventListener("click", updatepurchaseButton1, false);
 
 const purchaseButton2 = document.createElement("button");
-purchaseButton2.innerHTML = `cost 100 unity, get 2 units/sec`;
+let purchaseButton2Cost: number = 100;
+purchaseButton2.innerHTML = `cost ${purchaseButton2Cost} unity, get 2 units/sec`;
 function updatepurchaseButton2() {
   if (count >= 100) {
     growthRate += 2;
     count -= 100;
-    growthRateText.innerHTML = `Current Rate: ${growthRate}`;
+    purchaseButton2Cost *= 1.15;
+    growthRateText.innerHTML = `Current Growth Rate: ${growthRate.toFixed(1)}`;
+    purchaseButton2.innerHTML = `cost ${purchaseButton2Cost.toFixed(
+      3,
+    )} unity, get 2 units/sec`;
   }
 }
 app.append(purchaseButton2);
 purchaseButton2.addEventListener("click", updatepurchaseButton2, false);
 
 const purchaseButton3 = document.createElement("button");
-purchaseButton3.innerHTML = `cost 1000 unity, get 50 units/sec`;
+let purchaseButton3Cost: number = 1000;
+purchaseButton3.innerHTML = `cost ${purchaseButton3Cost} unity, get 50 units/sec`;
 function updatepurchaseButton3() {
   if (count >= 1000) {
     growthRate += 50;
     count -= 1000;
-    growthRateText.innerHTML = `Current Rate: ${growthRate}`;
+    purchaseButton3Cost *= 1.15;
+    growthRateText.innerHTML = `Current Growth Rate: ${growthRate.toFixed(1)}`;
+    purchaseButton3.innerHTML = `cost ${purchaseButton3Cost.toFixed(
+      3,
+    )} unity, get 50 units/sec`;
   }
 }
 app.append(purchaseButton3);
