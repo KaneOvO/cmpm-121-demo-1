@@ -68,7 +68,7 @@ interface Item {
 
 const availableItems: Item[] = [
   {
-    name: "A cup of your favorite milk tea",
+    name: "Buy a cup of your favorite milk tea",
     emoji: "🧋",
     description:
       "Lots of sugar. Drinking it makes the brain work at full speed.",
@@ -76,19 +76,34 @@ const availableItems: Item[] = [
     growthValue: 0.1,
   },
   {
-    name: "High-performance Computer",
+    name: "Buy a High-performance Computer",
     emoji: "🖥️",
     description: "No one can say no to the RTX4090.",
     cost: 100,
     growthValue: 2,
   },
   {
-    name: "A rookie programmer",
+    name: "Hire a rookie programmer",
     emoji: "🧑‍💻",
     description:
       "Newly hired programmer who doesn't realize what kind of hell he's about to face.",
     cost: 1000,
     growthValue: 50,
+  },
+  {
+    name: "Develop a new game",
+    emoji: "👹",
+    description:
+      "The new game from Monster Game Studios is still familiar with the monster theme.",
+    cost: 10000,
+    growthValue: 750,
+  },
+  {
+    name: "Establish a new branch of the studio",
+    emoji: "🏘️",
+    description: 'Time to change the name of the game to "Monster Games, Inc."',
+    cost: 100000,
+    growthValue: 7500,
   },
 ];
 
