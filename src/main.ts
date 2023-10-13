@@ -58,75 +58,90 @@ requestAnimationFrame(step);
 const lineBreak = document.createElement("br");
 app.append(lineBreak);
 
-function creatPurchaseButton(
-  name: string,
-  emoji: string,
-  description: string,
-  cost: number,
-  growthValue: number,
-) {
-  const newPurchaseButton = document.createElement("button");
-  const newPurchaseButtonName: string = name;
-  const newPurchaseButtonEmoji: string = emoji;
-  const newPurchaseButtonDescription: string = description;
-  let newPurchaseButtonCost: number = cost;
-  const newPurchaseButtonGrowthValue: number = growthValue;
+interface Item {
+  name: string;
+  emoji: string;
+  description: string;
+  cost: number;
+  growthValue: number;
+}
 
-  newPurchaseButton.innerHTML = `${newPurchaseButtonName} ${newPurchaseButtonEmoji} <br> Cost: ${newPurchaseButtonCost}💰 <br> Growth Rate: +  ${newPurchaseButtonGrowthValue}💰/sec <br> <b><i>${newPurchaseButtonDescription}</i></b>`;
-  function updateNewPurchaseButton() {
-    if (count >= newPurchaseButtonCost) {
-      growthRate += growthValue;
-      count -= newPurchaseButtonCost;
-      newPurchaseButtonCost *= 1.15;
+const availableItems: Item[] = [
+  {
+    name: "A cup of your favorite milk tea",
+    emoji: "🧋",
+    description:
+      "Lots of sugar. Drinking it makes the brain work at full speed.",
+    cost: 10,
+    growthValue: 0.1,
+  },
+  {
+    name: "High-performance Computer",
+    emoji: "🖥️",
+    description: "No one can say no to the RTX4090.",
+    cost: 100,
+    growthValue: 2,
+  },
+  {
+    name: "A rookie programmer",
+    emoji: "🧑‍💻",
+    description:
+      "Newly hired programmer who doesn't realize what kind of hell he's about to face.",
+    cost: 1000,
+    growthValue: 50,
+  },
+];
+
+function creatPurchaseButton(availableItems: Item[]) {
+  const purchaseButtons: HTMLButtonElement[] = [];
+  for (const item of availableItems) {
+    const newPurchaseButton = document.createElement("button");
+
+    newPurchaseButton.innerHTML = `${item.name} ${item.emoji} <br> Cost: ${item.cost}💰 <br> Growth Rate: +  ${item.growthValue}💰/sec <br> <b><i>${item.description}</i></b>`;
+
+    newPurchaseButton.addEventListener(
+      "click",
+      () => {
+        updateNewPurchaseButton(item, newPurchaseButton);
+      },
+      false,
+    );
+    purchaseButtons.push(newPurchaseButton);
+  }
+
+  function updateNewPurchaseButton(
+    item: Item,
+    newPurchaseButton: HTMLButtonElement,
+  ) {
+    if (count >= item.cost) {
+      growthRate += item.growthValue;
+      count -= item.cost;
+      item.cost *= 1.15;
       growthRateText.innerHTML = `Current Income: ${growthRate.toFixed(
         1,
       )} 💰/sec`;
-      newPurchaseButton.innerHTML = `${newPurchaseButtonName} ${newPurchaseButtonEmoji} <br> Cost: ${newPurchaseButtonCost.toFixed(
-        1,
-      )}💰 <br> Growth Rate: +  ${newPurchaseButtonGrowthValue}💰/sec <br> <b><i>${newPurchaseButtonDescription}</i></b>`;
+      newPurchaseButton.innerHTML = `${item.name} ${
+        item.emoji
+      } <br> Cost: ${item.cost.toFixed(1)}💰 <br> Growth Rate: +  ${
+        item.growthValue
+      }💰/sec <br> <b><i>${item.description}</i></b>`;
     }
   }
-  newPurchaseButton.addEventListener("click", updateNewPurchaseButton, false);
 
-  setInterval(() => {
-    if (count >= newPurchaseButtonCost) {
-      newPurchaseButton.disabled = false;
-    } else {
-      newPurchaseButton.disabled = true;
-    }
-  }, 100);
-
-  return newPurchaseButton;
+  return purchaseButtons;
 }
 
-const purchaseButton1 = creatPurchaseButton(
-  "A cup of your favorite milk tea",
-  "🧋",
-  "Lots of sugar. Drinking it makes the brain work at full speed.",
-  10,
-  0.1,
-);
+const purchaseButtons = creatPurchaseButton(availableItems);
 
-const purchaseButton2 = creatPurchaseButton(
-  "High-performance Computer",
-  "🖥️",
-  "No one can say no to the RTX4090.",
-  100,
-  2,
-);
-
-const purchaseButton3 = creatPurchaseButton(
-  "A rookie programmer",
-  "🧑‍💻",
-  "Newly hired programmer who doesn't realize what kind of hell he's about to face.",
-  1000,
-  50,
-);
-
-app.append(purchaseButton1, purchaseButton2, purchaseButton3);
+for (const button of purchaseButtons) {
+  app.appendChild(button);
+}
 
 setInterval(() => {
   if (mouseDown) {
     count++;
   }
+  availableItems.forEach((item, i) => {
+    purchaseButtons[i].disabled = item.cost > count;
+  });
 }, 100);
